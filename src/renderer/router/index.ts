@@ -23,7 +23,7 @@ const routes: Array<RouteRecordRaw> = [
     path: '/leaderboard',
     name: 'LeaderBoard',
     component: Leaderboard
-}
+},
 ]
 
 const router = createRouter({
