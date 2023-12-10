@@ -1,31 +1,14 @@
 <template lang="">
     <div>
-        <div>
-            Колво: {{clicks}}
-        </div>
-        Осталось: {{counter}}
-        <router-link to="/">
-            <game-button>
-                Вернуться назад
-            </game-button>
-        </router-link>
+        
     </div>
 </template>
 
-<script lang="ts">
-    import { defineComponent, PropType } from "vue"
-    import GameButton from "../components/GameButton.vue";
-    export default defineComponent({
-        components: {
-            GameButton
-        },
-        data() {
-            return {
-                clicks: 0,
-                counter: 4,
-            }
-        }
-    })
+<script setup lang="ts">
+    import {Catch} from "../game/game";
+    import {onMounted} from "vue";
+
+    onMounted(() => Catch.launch());
 </script>
 
 <style lang="css" scoped>
