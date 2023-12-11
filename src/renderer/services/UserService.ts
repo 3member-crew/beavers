@@ -1,26 +1,34 @@
-import http from "../http_common"
+import axios from 'axios';
 
-class UserService {
-    getAll() {
-        return http.get("/users/");
-    }
+const API_URL = 'http://localhost:8080/api/auth/';
 
-    get(username: string) {
-        return http.get(`/tutorials/${username}/`);
-    }
+class AuthService {
+  login(username: string, password: string) {
+    return axios
+      .post(API_URL + 'signin', {
+        username,
+        password
+      })
+      .then(response => {
+        if (response.data.accessToken) {
+          localStorage.setItem('user', JSON.stringify(response.data));
+        }
 
-    register(data: any) {
-        return http.post("/register/", data);
-    }
+        return response.data;
+      });
+  }
 
-    login(data: any) {
-        return http.post("/login/", data);
-    }
+  logout() {
+    localStorage.removeItem('user');
+  }
 
-    update(username:string, data: number) {
-        return http.put(`/user/${username}/update/`, data);
-    }
-
+  register(username: string, email: string, password: string) {
+    return axios.post(API_URL + 'signup', {
+      username,
+      email,
+      password
+    });
+  }
 }
 
-export default new UserService();
+export default new AuthService();
