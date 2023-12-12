@@ -3,17 +3,19 @@
 
 <template>
   
-  <div class="menu">
+  <div class="main">
     <router-view>
     </router-view>
   </div>
 </template>
 
 <style lang="css">
+
   body {
     margin: 0;
     padding: 0;
     font-family: 'Kanit', sans-serif;
+
   }
   .main {
     display: flex;
