@@ -54,7 +54,7 @@
 
 <script lang="ts">
     import { defineComponent, PropType } from "vue"
-    import GameButton from "C:/Users/Huawei1/projects/mesen_labs/vue-ts-game/src/components/UI/GameButton.vue";
+    import GameButton from "../components/GameButton.vue";
 
     export default defineComponent({
         components: {
