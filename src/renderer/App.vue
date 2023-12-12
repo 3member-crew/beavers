@@ -19,8 +19,8 @@ const route = useRoute()
     margin: 0;
     padding: 0;
     font-family: 'Kanit', sans-serif;
-
   }
+
   .main {
     display: flex;
     justify-content: center;

@@ -32,7 +32,7 @@
 <style lang="css" scoped>
   .buttons {
     display: flex;
-    justify-content: space-evenly;
+    justify-content: center;
     width: 70%;
   }
 </style>
