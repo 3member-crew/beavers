@@ -1,11 +1,14 @@
-import { createApp } from 'vue'
-
-import './style.css';
-import App from './App.vue'
+import Vue from 'vue';
+import { createApp } from 'vue';
+import App from './App.vue';
 import router from './router';
+import store from './store';
+import 'bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import VeeValidate from 'vee-validate';
 
-const app = createApp(App);
-
-app.use(router)
-app.mount('#app');
-
+createApp(App)
+    .use(VeeValidate)
+    .use(router)
+    .use(store)
+    .mount('#app');

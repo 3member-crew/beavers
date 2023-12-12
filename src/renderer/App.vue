@@ -1,9 +1,5 @@
-<script lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
-import {useRoute} from "vue-router";
-window.electronAPI.sendMessage('Hello from App.vue!');
+<script setup lang="ts">
 
-const route = useRoute()
 </script>
 
 <template>
