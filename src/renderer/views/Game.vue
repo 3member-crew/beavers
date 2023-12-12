@@ -145,6 +145,7 @@
             this.bountyLoop();
         }
     })
+
 </script>
 
 <style lang="css" scoped>
