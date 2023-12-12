@@ -10,7 +10,6 @@
 import UserService from "../services/UserService";
 import { Component, defineComponent } from "vue";
 import User from "../typings/User"
-import http from "../http_common"
 export default defineComponent({
     data() {
         const info: User[] = []

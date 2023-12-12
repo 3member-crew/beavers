@@ -5,7 +5,6 @@
   
   <div class="menu">
     <router-view>
-
     </router-view>
   </div>
 </template>
