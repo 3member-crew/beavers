@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts">
 import HelloWorld from './components/HelloWorld.vue'
 import {useRoute} from "vue-router";
 window.electronAPI.sendMessage('Hello from App.vue!');
@@ -7,7 +7,6 @@ const route = useRoute()
 </script>
 
 <template>
-  
   <div class="main">
     <router-view>
     </router-view>

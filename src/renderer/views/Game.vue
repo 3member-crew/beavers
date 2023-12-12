@@ -1,6 +1,5 @@
 <template lang="">
-    <div>
-        
+    <div id="game" style="overflow: hidden">
     </div>
 </template>
 
