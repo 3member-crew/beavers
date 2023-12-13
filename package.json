@@ -16,6 +16,7 @@
     "url": "https://github.com/Deluze"
   },
   "devDependencies": {
+    "@types/jsonwebtoken": "^9.0.5",
     "@vitejs/plugin-vue": "^4.0.0",
     "chalk": "^4.1.2",
     "chokidar": "^3.5.3",
@@ -29,9 +30,11 @@
     "axios": "^1.6.2",
     "bootstrap": "^5.3.2",
     "jquery": "^3.7.1",
+    "jsonwebtoken": "^9.0.2",
     "popper.js": "^1.16.1",
     "vee-validate": "^2.2.15",
     "vue": "^3.2.47",
+    "vue-cookies": "^1.8.3",
     "vue-router": "^4.2.5",
     "vuex": "^4.1.0"
   }
