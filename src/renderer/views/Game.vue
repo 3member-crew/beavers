@@ -1,60 +1,46 @@
 <template lang="">
-    <div>
-        <div v-if="counter !== 0">
-            <div>
-                Осталось: {{counter}}
-            </div>
-            <div>
-                Ваш счет: {{currScore}}
-            </div>
-            <div class="game">
-                <div>
-                    <img 
-                        src="../assets/bountyRune.jpg"
-                        class="bounty-rune"
-                        v-if="isLeftLog">
-                    <img src="../assets/noneRune.jpg" class="bounty-rune" v-else>
-                </div>
-                <div>
-                    <img src="../assets/pudge.jpg" v-if="isLeftBeaver">
-                    <img src="../assets/pudgeRight.jpg" v-else>
-                </div>
-                <div>
-                    <img 
-                        src="../assets/bountyRune.jpg"
-                        class="bounty-rune"
-                        v-if="isRightLog">
-                    <img src="../assets/noneRune.jpg" class="bounty-rune" v-else>
-                </div>
-            </div>
-            <div>
-                <game-button @click="toLeftBeaver">
-                    Влево
-                </game-button>
-                <game-button @click="toRightBeaver">
-                    Вправо
-                </game-button>
-            </div>
+    <div class="game" v-if="counter !== 0">
+        <div>
+            Осталось: {{counter}}
         </div>
-        <div 
-            class="game-over"
-            v-if="counter === 0"
-            >
-            <div> 
-                Ваш результат: {{currScore}}
-            </div>
-            <router-link to="/">
-                <game-button>
-                    Вернуться назад
-                </game-button>
-            </router-link>
+        <div>
+            Ваш счет: {{currScore}}
         </div>
+        <div class="objects">
+                <img src="../assets/bountyRune.jpg" class="bounty-rune" v-if="isLeftLog">
+                <img src="../assets/noneRune.jpg" class="bounty-rune" v-else>
+            <div>
+                <img src="../assets/pudge.jpg" v-if="isLeftBeaver">
+                <img src="../assets/pudgeRight.jpg" v-else>
+            </div>
+                <img src="../assets/bountyRune.jpg" class="bounty-rune" v-if="isRightLog">
+                <img src="../assets/noneRune.jpg" class="bounty-rune" v-else>
+        </div>
+        <div class="btn">
+            <game-button @click="toLeftBeaver">
+                Влево
+            </game-button>
+            <game-button @click="toRightBeaver">
+                Вправо
+            </game-button>
+        </div>
+    </div>
+    <div class="game-over" v-else>
+        <div> 
+            Ваш результат: {{currScore}}
+        </div>
+        <router-link to="/">
+            <game-button>
+                Вернуться назад
+            </game-button>
+        </router-link>
     </div>
 </template>
 
 <script lang="ts">
     import { defineComponent, PropType } from "vue"
     import GameButton from "../components/GameButton.vue";
+    import http from "../http_common";
 
     export default defineComponent({
         components: {
@@ -69,7 +55,8 @@
                 isRightBeaver: false,
                 isRightLog: true,
                 isLeftLog: false,
-                catched: false
+                catched: false,
+                user: null
             }
         },
         methods: 
@@ -109,14 +96,14 @@
                     this.isLeftLog = true;
                     this.isRightLog = false;
                     this.catched = false;
-                }, 1000);
+                }, this.randomNum() * 3 * 1000);
             },
             toRightBounty() {
                 setTimeout(() => {
                     this.isLeftLog = false;
                     this.isRightLog = true;
                     this.catched = false;
-                }, 1000);
+                }, this.randomNum() * 3 * 1000);
             },
             bountyLoop() {
                 if (this.isRightLog) {
@@ -135,20 +122,48 @@
                 return random;
             }
         },
-        mounted() {
+        async mounted() {
             this.countDown();
-        },
-        beforeUpdate() {
-            this.increment();
+            await http.get('/user/')
+            .then((response) => {
+                this.user = response.data;
+                console.log(response)
+            })
+            .catch((e) => {
+                console.log(e)
+            })
         },
         updated() {
+            this.increment();
             this.bountyLoop();
+        },
+        async unmounted() {
+            if (this.user.score < this.score) {
+                try { 
+                    const response = await http.put('/user/update', { 
+                            score: this.score 
+                            }); 
+                }
+                catch (error) { 
+                    console.error(error); 
+                }
+            }
         }
     })
 
 </script>
 
 <style lang="css" scoped>
+    .hundred {
+        width: 100%;
+    }
+
+    .objects {
+        display: flex;
+        justify-content: space-evenly;
+        width: 70%;
+    }
+
     .game-over {
         display: flex;
         flex-direction: column;
@@ -160,11 +175,22 @@
     }
 
     .bounty-rune {
-        width: 40%;
+        width: 150px;
+    }
+
+    .btn {
+        display: flex;
+        justify-content: space-evenly;
     }
 
     .game {
         display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
     }
 
+    a {
+        text-decoration: none;
+    }
 </style>

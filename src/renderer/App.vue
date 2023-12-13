@@ -2,7 +2,6 @@
 </script>
 
 <template>
-  
   <div class="main">
     <router-view>
     </router-view>
@@ -10,7 +9,6 @@
 </template>
 
 <style lang="css">
-
   body {
     margin: 0;
     padding: 0;
@@ -21,5 +19,11 @@
     display: flex;
     justify-content: center;
     width: 100%;
+  }
+
+  #app {
+    display: flex;
+    align-items: center;
+    height: 100vh;
   }
 </style>
