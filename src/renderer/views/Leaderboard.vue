@@ -1,34 +1,39 @@
 <template lang="">
-    <div>
-        <div v-for="user in info" :key="username">
-            {{user.username}}
-            {{user.score}}
-        </div>
-    </div>
     <router-link to="/">
         <game-button>
             Вернуться назад
         </game-button>
     </router-link>
+    <div>
+        <div v-for="user in info" :key="username">
+            <game-button>{{user.username}}
+            {{user.score}}</game-button>
+        </div>
+    </div>
 </template>
 <script lang="ts">
-import UserService from "../services/UserService";
 import { Component, defineComponent } from "vue";
+import GameButton from "../components/GameButton.vue";
 import User from "../typings/User"
+import http from "../http_common";
 export default defineComponent({
+    components: {
+        GameButton
+    },
+
     data() {
         const info: User[] = []
-        return { info};
+        return { info };
     },
-    mounted() {
-        UserService.getAll()
-        .then((response) => {
-            this.info = response.data;
-            console.log(response)
-        })
-        .catch((e) => {
-            console.log(e)
-        })
+    async mounted() {
+            await http.get('/users/')
+            .then((response) => {
+                this.info = response.data;
+                console.log(response)
+            })
+            .catch((e) => {
+                console.log(e)
+            })
     }
 })
 

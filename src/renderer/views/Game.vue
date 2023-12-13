@@ -1,5 +1,8 @@
 <template lang="">
     <div>
+        <h3 v-if="user">{{user.username}}</h3>
+    </div>
+    <div>
         <div v-if="counter !== 0">
             <div>
                 Осталось: {{counter}}
@@ -53,117 +56,126 @@
 </template>
 
 <script lang="ts">
-    import { defineComponent, PropType } from "vue"
-    import GameButton from "../components/GameButton.vue";
+import { defineComponent, PropType } from "vue"
+import GameButton from "../components/GameButton.vue";
+import http from "../http_common";
+export default defineComponent({
+    components: {
+        GameButton
+    },
 
-    export default defineComponent({
-        components: {
-            GameButton
-        },
-        data() {
-            return {
-                currScore: 0,
-                counter: 10,
-                score: 0,
-                isLeftBeaver: true,
-                isRightBeaver: false,
-                isRightLog: true,
-                isLeftLog: false,
-                catched: false
+    data() {
+        return {
+            currScore: 0,
+            counter: 10,
+            score: 0,
+            isLeftBeaver: true,
+            isRightBeaver: false,
+            isRightLog: true,
+            isLeftLog: false,
+            catched: false,
+            user:null
+        }
+    },
+    methods:
+    {
+        increment() {
+            if (this.isRightBeaver && this.isRightLog && !this.catched) {
+                this.catched = true;
+                this.currScore++;
             }
-        },
-        methods: 
-        {
-            increment() {
-                if (this.isRightBeaver && this.isRightLog && !this.catched) {
+            else {
+                if (this.isLeftBeaver && this.isLeftLog && !this.catched) {
                     this.catched = true;
                     this.currScore++;
                 }
-                else {
-                    if (this.isLeftBeaver && this.isLeftLog && !this.catched) {
-                        this.catched = true;
-                        this.currScore++;
-                    }
-                }
-            },
-            countDown() {
-                if (this.counter) {
-                    return setTimeout(() => {
-                    --this.counter
-                    this.countDown()
-                    }, 1000)
-                }
-
-                this.score = this.currScore;
-            },
-            toLeftBeaver() {
-                this.isRightBeaver = false;
-                this.isLeftBeaver = true;
-            },
-            toRightBeaver() {
-                this.isLeftBeaver = false;
-                this.isRightBeaver = true;
-            },
-            toLeftBounty() {
-                setTimeout(() => {
-                    this.isLeftLog = true;
-                    this.isRightLog = false;
-                    this.catched = false;
-                }, 1000);
-            },
-            toRightBounty() {
-                setTimeout(() => {
-                    this.isLeftLog = false;
-                    this.isRightLog = true;
-                    this.catched = false;
-                }, 1000);
-            },
-            bountyLoop() {
-                if (this.isRightLog) {
-                    this.toLeftBounty();
-                }
-                else {
-                    this.toRightBounty();
-                }
-            },
-            randomNum() {
-                var random = Math.random();
-
-                if (random < 0.34)
-                    return 1;
-
-                return random;
             }
         },
-        mounted() {
-            this.countDown();
+        countDown() {
+            if (this.counter) {
+                return setTimeout(() => {
+                    --this.counter
+                    this.countDown()
+                }, 1000)
+            }
+
+            this.score = this.currScore;
         },
-        beforeUpdate() {
-            this.increment();
+        toLeftBeaver() {
+            this.isRightBeaver = false;
+            this.isLeftBeaver = true;
         },
-        updated() {
-            this.bountyLoop();
+        toRightBeaver() {
+            this.isLeftBeaver = false;
+            this.isRightBeaver = true;
+        },
+        toLeftBounty() {
+            setTimeout(() => {
+                this.isLeftLog = true;
+                this.isRightLog = false;
+                this.catched = false;
+            }, 1000);
+        },
+        toRightBounty() {
+            setTimeout(() => {
+                this.isLeftLog = false;
+                this.isRightLog = true;
+                this.catched = false;
+            }, 1000);
+        },
+        bountyLoop() {
+            if (this.isRightLog) {
+                this.toLeftBounty();
+            }
+            else {
+                this.toRightBounty();
+            }
+        },
+        randomNum() {
+            var random = Math.random();
+
+            if (random < 0.34)
+                return 1;
+
+            return random;
         }
-    })
+    },
+    async mounted() {
+        this.countDown();
+        await http.get('/user/')
+            .then((response) => {
+                this.user = response.data;
+                console.log(response)
+            })
+            .catch((e) => {
+                console.log(e)
+            })
+    },
+    beforeUpdate() {
+        this.increment();
+    },
+    updated() {
+        this.bountyLoop();
+    },
+})
 </script>
 
 <style lang="css" scoped>
-    .game-over {
-        display: flex;
-        flex-direction: column;
-        color: white;
-        background-color: #7e727e;
-        border-radius: 5px;
-        font-size: 26px;
-        padding: 40px;
-    }
+.game-over {
+    display: flex;
+    flex-direction: column;
+    color: white;
+    background-color: #7e727e;
+    border-radius: 5px;
+    font-size: 26px;
+    padding: 40px;
+}
 
-    .bounty-rune {
-        width: 40%;
-    }
+.bounty-rune {
+    width: 40%;
+}
 
-    .game {
-        display: flex;
-    }
-
+.game {
+    display: flex;
+}
 </style>
