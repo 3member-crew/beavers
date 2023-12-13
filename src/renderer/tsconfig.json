@@ -9,8 +9,9 @@
       "sourceMap": true,
       "resolveJsonModule": true,
       "esModuleInterop": true,
-      "lib": ["esnext", "dom"],
-      "types": ["vite/client"]
+      "lib": ["esnext", "dom", "es6", "dom.iterable", "scripthost"],
+      "typeRoots": ["./node_modules/phaser/types"],
+      "types": ["vite/client", "Phaser"]
     },
     "include": ["./**/*.ts", "./**/*.d.ts", "./**/*.tsx", "./**/*.vue"],
   }
