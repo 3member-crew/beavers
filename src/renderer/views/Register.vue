@@ -1,16 +1,22 @@
 <template>
-    <div>
-        <h1>Авторизация</h1>
+        <div class="header">
+            Авторизация
+        </div>
         <form @submit.prevent="login">
-            <input v-model="username" type="text" placeholder="Имя пользователя" required>
-            <input v-model="email" type="email" placeholder="Почта" required>
-            <input v-model="password" type="password" placeholder="Пароль" required>
-            <button type="submit">Войти</button>
+            <div style="display: flex; flex-direction; column;">
+                <input v-model="username" type="text" placeholder="Имя пользователя" required>
+                <input v-model="email" type="email" placeholder="Почта" required>
+                <input v-model="password" type="password" placeholder="Пароль" required>
+                <button type="submit">Войти</button>
+            </div>
         </form>
         <router-link to="/">
-            Вернуться назад
+            <div class="exit">
+                <game-button>
+                    Назад
+                </game-button>
+            </div>
         </router-link>
-    </div>
 </template>
 <script lang="ts">
 import http from "../http_common";
@@ -46,3 +52,23 @@ export default {
 };
 
 </script>
+
+<style scoped lang="css">
+.header {
+    background-color: #060223;
+    font-size: 30px;
+    text-align: center;
+    padding: 20px;
+    color: #7f9e9f;
+    font-weight: 700;
+}
+
+.exit {
+    display: flex;
+    position: absolute;
+    justify-content: flex-end;
+    width: 40%;
+    bottom: 2em;
+    right: 2em;
+}
+</style>

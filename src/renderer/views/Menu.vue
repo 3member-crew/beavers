@@ -1,35 +1,44 @@
 <template lang="">
-    <div class="buttons">
-        <router-link to="/profile">
-            <game-button>
-                Профиль
-            </game-button>
-        </router-link>
-        <router-link to="/game">
-            <game-button>
-                Играть
-            </game-button>
-        </router-link>
-        <router-link to="/leaderboard">
-            <game-button>
-                Лидерборд
-            </game-button>
-        </router-link>
-        <div v-if="!isAuth">
-            <router-link to="/login">
-                <game-button>
-                    Логин
+    <div class="menu">
+        <div class="header">
+            Меню
+        </div>
+        <div class="buttons">
+            <router-link to="/game">
+                <game-button class="btns">
+                    Играть
                 </game-button>
             </router-link>
-            <router-link to="/register">
-                <game-button>
-                    Регистрация
-                </game-button>
-            </router-link>
+            <div v-if="isAuth">
+                <router-link to="/profile">
+                    <game-button class="btns">
+                        Профиль
+                    </game-button>
+                </router-link>
             </div>
-        <game-button>
-            <p @click="handleExit">Выход</p>
-        </game-button>
+            <div v-if="!isAuth" style="display: flex; flex-direction: column; align-items: center;">
+                <router-link to="/login">
+                    <game-button>
+                        Логин
+                    </game-button>
+                </router-link>
+                <router-link to="/register">
+                    <game-button>
+                        Регистрация
+                    </game-button>
+                </router-link>
+                </div>
+            <router-link to="/leaderboard">
+                <game-button class="btns">
+                    Лидерборд
+                </game-button>
+            </router-link>
+            <div class="exit">
+                <game-button class="btns">
+                    Выйти
+                </game-button>
+            </div>
+        </div>
     </div>
   </template>
   
@@ -63,9 +72,56 @@ export default defineComponent({
 </script>
   
 <style lang="css" scoped>
+.menu {
+    display: flex;
+    flex-direction: column;
+}
+.leftSide {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 40%;
+}
+
+.info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 60%;
+}
+
+.about {
+    height: 45vh;
+}
+
+.game-route {
+    height: 55vh;
+    align-self: flex-start;
+}
+
 .buttons {
     display: flex;
-    justify-content: center;
-    width: 70%;
+    flex-direction: column;
+}
+
+.exit {
+    position: absolute;
+    bottom: 2em;
+}
+
+.btns {
+    width: 9em;
+    font-size: 4cqmin;
+    margin-bottom: 0.5em;
+}
+
+.header {
+    background-color: #060223;
+    font-size: 30px;
+    text-align: center;
+    padding: 20px;
+    color: #7f9e9f;
+    font-weight: 700;
 }
 </style>

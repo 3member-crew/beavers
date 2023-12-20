@@ -10,21 +10,24 @@
 </script>
 
 <style scoped>
-    .btn {
-        background: none;
-        font-size: 20px;
-        color:white;
-        margin-top: 10px;
-        border: 3px solid #234f3a;
-        border-radius: 10px;
-        background: #234f3a;
-        padding: 10px 25px;
-        font-family: "Fira Sans", sans-serif;
-        font-size: 26px;
-    }
-    .btn:hover {
-        background-color: #86b099;
-        color: #402e1a;
-        border-color: #402e1a;
-    }
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;500&family=Roboto:wght@700&display=swap');
+
+.btn {
+    background: none;
+    font-size: 20px;
+    color: #2f1e1e;
+    margin-top: 10px;
+    border: 3px solid #7f9e9f;
+    border-radius: 10px;
+    background: #7f9e9f;
+    padding: 10px 25px;
+    font-family: 'Comfortaa', sans-serif;
+    font-size: 26px;
+    font-weight: 700;
+}
+.btn:hover {
+    background-color: #0a2d2b;
+    color: gray;
+    border-color: #0a2d2b;
+}
 </style>

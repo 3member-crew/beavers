@@ -1,57 +1,39 @@
 <template lang="">
-    <div>
-        <h3 v-if="user">{{user.username}}</h3>
+    <div class="game" v-if="counter !== 0">
+        <div>
+            Осталось: {{counter}}
+        </div>
+        <div>
+            Ваш счет: {{currScore}}
+        </div>
+        <div class="objects">
+                <img src="../assets/log.png" class="bounty-rune" v-if="isLeftLog">
+                <img src="../assets/noneRune.jpg" class="bounty-rune" v-else>
+            <div style="display: flex; justify-content: center;">
+                <img src="../assets/beaverLeft.png" v-if="isLeftBeaver" class="beaver-img">
+                <img src="../assets/beaverRight.png" v-else class="beaver-img">
+            </div>
+                <img src="../assets/log.png" class="bounty-rune" v-if="isRightLog">
+                <img src="../assets/noneRune.jpg" class="bounty-rune" v-else>
+        </div>
+        <div class="btn">
+            <game-button @click="toLeftBeaver">
+                Влево
+            </game-button>
+            <game-button @click="toRightBeaver">
+                Вправо
+            </game-button>
+        </div>
     </div>
-    <div>
-        <div v-if="counter !== 0">
-            <div>
-                Осталось: {{counter}}
-            </div>
-            <div>
-                Ваш счет: {{currScore}}
-            </div>
-            <div class="game">
-                <div>
-                    <img 
-                        src="../assets/bountyRune.jpg"
-                        class="bounty-rune"
-                        v-if="isLeftLog">
-                    <img src="../assets/noneRune.jpg" class="bounty-rune" v-else>
-                </div>
-                <div>
-                    <img src="../assets/pudge.jpg" v-if="isLeftBeaver">
-                    <img src="../assets/pudgeRight.jpg" v-else>
-                </div>
-                <div>
-                    <img 
-                        src="../assets/bountyRune.jpg"
-                        class="bounty-rune"
-                        v-if="isRightLog">
-                    <img src="../assets/noneRune.jpg" class="bounty-rune" v-else>
-                </div>
-            </div>
-            <div>
-                <game-button @click="toLeftBeaver">
-                    Влево
-                </game-button>
-                <game-button @click="toRightBeaver">
-                    Вправо
-                </game-button>
-            </div>
+    <div class="game-over" v-else>
+        <div> 
+            Ваш результат: {{currScore}}
         </div>
-        <div 
-            class="game-over"
-            v-if="counter === 0"
-            >
-            <div> 
-                Ваш результат: {{currScore}}
-            </div>
-            <router-link to="/">
-                <game-button>
-                    Вернуться назад
-                </game-button>
-            </router-link>
-        </div>
+        <router-link to="/">
+            <game-button>
+                Вернуться назад
+            </game-button>
+        </router-link>
     </div>
 </template>
 
@@ -59,6 +41,7 @@
 import { defineComponent, PropType } from "vue"
 import GameButton from "../components/GameButton.vue";
 import http from "../http_common";
+
 export default defineComponent({
     components: {
         GameButton
@@ -161,6 +144,12 @@ export default defineComponent({
 </script>
 
 <style lang="css" scoped>
+.objects {
+    display: flex;
+    justify-content: space-evenly;
+    width: 70%;
+}
+
 .game-over {
     display: flex;
     flex-direction: column;
@@ -172,10 +161,26 @@ export default defineComponent({
 }
 
 .bounty-rune {
-    width: 40%;
+    width: 20%;
+}
+
+.btn {
+    display: flex;
+    justify-content: space-evenly;
 }
 
 .game {
     display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+a {
+    text-decoration: none;
+}
+
+.beaver-img {
+    width: 50%;
 }
 </style>
