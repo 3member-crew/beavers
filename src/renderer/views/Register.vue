@@ -53,15 +53,15 @@
 
                     const token = response.data.token;
 
-                    if (token) {
-                        localStorage.setItem('token', token)
-                    }
-                } catch (error) {
-                    console.error(error);
+                if (token) {
+                    localStorage.setItem('token', token)
                 }
-            },
+            } catch (error) {
+                console.error(error);
+            }
         },
-    };
+    },
+};
 </script>
 
 <style scoped lang="css">

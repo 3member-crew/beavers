@@ -48,6 +48,7 @@ export default defineComponent({
     },
 
     data() {
+
         return {
             currScore: 0,
             counter: 10,
@@ -57,7 +58,8 @@ export default defineComponent({
             isRightLog: true,
             isLeftLog: false,
             catched: false,
-            user:null
+            user: null,
+            userscore: 0,
         }
     },
     methods:
@@ -128,11 +130,17 @@ export default defineComponent({
         await http.get('/user/')
             .then((response) => {
                 this.user = response.data;
+                this.userscore = response.data.score;
                 console.log(response)
             })
             .catch((e) => {
                 console.log(e)
             })
+        if (this.score > this.userscore) {
+            const response = await http.put('/user/update/', {
+                score: this.userscore
+            });
+        } 
     },
     beforeUpdate() {
         this.increment();

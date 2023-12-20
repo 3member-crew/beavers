@@ -48,7 +48,7 @@ export default defineComponent({
     },
 
     methods: {
-        handleExit() {
+        async handleExit() {
             localStorage.removeItem('token');
         },
         async checkAuth() {
