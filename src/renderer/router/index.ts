@@ -5,11 +5,12 @@ import Game from "../views/Game.vue";
 import Leaderboard from "../views/Leaderboard.vue";
 import Login from '../views/Login.vue';
 import Register from '../views/Register.vue';
+
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
-    name: 'Menu',
-    component: Menu,
+    name: 'Login',
+    component: Login,
   },
   {
     path: '/profile',
@@ -20,7 +21,6 @@ const routes: Array<RouteRecordRaw> = [
     path: '/game',
     name: 'Game',
     component: Game,
-    meta: { requiresAuth: true },
 },
 {
     path: '/leaderboard',
@@ -28,14 +28,14 @@ const routes: Array<RouteRecordRaw> = [
     component: Leaderboard
 },
 {
-  path: '/login',
-  name: 'Login',
-  component: Login,
+  path: '/menu',
+  name: 'Menu',
+  component: Menu,
 },
 {
   path: '/register',
   name: 'Register',
-  component: Login,
+  component: Register,
 },
 ]
 

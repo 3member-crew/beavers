@@ -1,4 +1,4 @@
-<template lang="">
+<template>
     <div class="leaderboard">
         <div class="header">
             Таблица лидеров
@@ -21,7 +21,7 @@
                 </div>
             </div>
         </div>
-        <router-link to="/">
+        <router-link to="/menu">
             <div class="exit">
                 <game-button>
                     Назад
@@ -31,31 +31,30 @@
     </div>
 </template>
 <script lang="ts">
-import { Component, defineComponent } from "vue";
-import GameButton from "../components/GameButton.vue";
-import User from "../typings/User"
-import http from "../http_common";
-export default defineComponent({
-    components: {
-        GameButton
-    },
+    import { Component, defineComponent } from "vue";
+    import GameButton from "../components/GameButton.vue";
+    import User from "../typings/User"
+    import http from "../http_common";
+    export default defineComponent({
+        components: {
+            GameButton
+        },
 
-    data() {
-        const info: User[] = []
-        return { info };
-    },
-    async mounted() {
-            await http.get('/users/')
-            .then((response) => {
-                this.info = response.data;
-                console.log(response)
-            })
-            .catch((e) => {
-                console.log(e)
-            })
-    }
-})
-
+        data() {
+            const info: User[] = []
+            return { info };
+        },
+        async mounted() {
+                await http.get('/users/')
+                .then((response) => {
+                    this.info = response.data;
+                    console.log(response)
+                })
+                .catch((e) => {
+                    console.log(e)
+                })
+        }
+    })
 </script>
 
 <style scoped lang="css">

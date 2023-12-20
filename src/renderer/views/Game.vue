@@ -1,4 +1,4 @@
-<template lang="">
+<template>
     <div class="game" v-if="counter !== 0">
         <div>
             Осталось: {{counter}}

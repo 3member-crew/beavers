@@ -1,4 +1,4 @@
-<template lang="">
+<template>
     <div class="profile">
         <div class="header">
             Профиль
@@ -44,7 +44,7 @@
                 </div>
             </div>
         </div>
-        <router-link to="/">
+        <router-link to="/menu">
             <div class="exit">
                 <game-button>
                     Вернуться назад
@@ -153,7 +153,7 @@ export default defineComponent({
     border: 3px solid #8496ae;
     border-radius: 10px;
     background: #8496ae;
-    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
 }
 
 #copy-id:hover {
@@ -167,7 +167,7 @@ export default defineComponent({
     border: 3px solid #8496ae;
     border-radius: 10px;
     background: #8496ae;
-    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
 }
 
 #copy-name:hover {

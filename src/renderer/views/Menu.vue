@@ -1,4 +1,4 @@
-<template lang="">
+<template>
     <div class="menu">
         <div class="header">
             Меню
@@ -9,34 +9,22 @@
                     Играть
                 </game-button>
             </router-link>
-            <div v-if="isAuth">
-                <router-link to="/profile">
-                    <game-button class="btns">
-                        Профиль
-                    </game-button>
-                </router-link>
-            </div>
-            <div v-if="!isAuth" style="display: flex; flex-direction: column; align-items: center;">
-                <router-link to="/login">
-                    <game-button>
-                        Логин
-                    </game-button>
-                </router-link>
-                <router-link to="/register">
-                    <game-button>
-                        Регистрация
-                    </game-button>
-                </router-link>
-                </div>
+            <router-link to="/profile">
+                <game-button class="btns">
+                    Профиль
+                </game-button>
+            </router-link>
             <router-link to="/leaderboard">
                 <game-button class="btns">
                     Лидерборд
                 </game-button>
             </router-link>
             <div class="exit">
-                <game-button class="btns">
-                    Выйти
-                </game-button>
+                <router-link to="/">
+                    <game-button class="btns">
+                        Выйти
+                    </game-button>
+                </router-link>
             </div>
         </div>
     </div>
