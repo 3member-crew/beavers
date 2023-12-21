@@ -30,4 +30,8 @@
     color: gray;
     border-color: #0a2d2b;
 }
+
+.btn:focus {
+    outline: none;
+}
 </style>

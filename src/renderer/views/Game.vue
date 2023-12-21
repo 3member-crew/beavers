@@ -1,39 +1,53 @@
-<template lang="">
-    <div class="game" v-if="counter !== 0">
-        <div>
-            Осталось: {{counter}}
-        </div>
-        <div>
-            Ваш счет: {{currScore}}
-        </div>
-        <div class="objects">
-                <img src="../assets/log.png" class="bounty-rune" v-if="isLeftLog">
-                <img src="../assets/noneRune.jpg" class="bounty-rune" v-else>
-            <div style="display: flex; justify-content: center;">
-                <img src="../assets/beaverLeft.png" v-if="isLeftBeaver" class="beaver-img">
-                <img src="../assets/beaverRight.png" v-else class="beaver-img">
+<template>
+    <div class="bg">
+        <div class="game" v-if="counter !== 0">
+            <div class="timer">
+                Осталось: {{counter}}
             </div>
-                <img src="../assets/log.png" class="bounty-rune" v-if="isRightLog">
-                <img src="../assets/noneRune.jpg" class="bounty-rune" v-else>
+            <div class="score-info">
+                Ваш счет: {{currScore}}
+            </div>
+            <div class="objects">
+                    <img src="../assets/log.png" class="bounty-rune" v-if="isLeftLog">
+                    <div style="width: 170.66px; height: 200px;" v-else>
+                    </div>
+                <div style="display: flex; justify-content: center;">
+                    <img src="../assets/beaverLeft.png" v-if="isLeftBeaver" class="beaver-img">
+                    <img src="../assets/beaverRight.png" v-else class="beaver-img">
+                </div>
+                    <img src="../assets/log.png" class="bounty-rune" v-if="isRightLog">
+                    <div style="width: 170.66px; height: 200px;" v-else>
+                    </div>
+            </div>
+            <div class="btn">
+                <game-button @click="toLeftBeaver" style="width: 200px">
+                    Влево
+                </game-button>
+                <game-button @click="toRightBeaver" style="width: 200px">
+                    Вправо
+                </game-button>
+            </div>
         </div>
-        <div class="btn">
-            <game-button @click="toLeftBeaver">
-                Влево
-            </game-button>
-            <game-button @click="toRightBeaver">
-                Вправо
-            </game-button>
+        <div class="game-over" v-else>
+            <div> 
+                Ваш результат: {{currScore}}
+            </div>
+            <router-link to="/menu">
+                <game-button>
+                    Вернуться назад
+                </game-button>
+            </router-link>
         </div>
-    </div>
-    <div class="game-over" v-else>
-        <div> 
-            Ваш результат: {{currScore}}
-        </div>
-        <router-link to="/">
-            <game-button>
-                Вернуться назад
-            </game-button>
-        </router-link>
+        <img src="../assets/bg1.png" class="logs-img" v-if="currScore >= 2 && currScore < 4 && counter">
+        <img src="../assets/bg2.png" class="logs-img" v-if="currScore >= 4 && currScore < 6 && counter">
+        <img src="../assets/bg3.png" class="logs-img" v-if="currScore >= 6 && currScore < 8 && counter">
+        <img src="../assets/bg4.png" class="logs-img" v-if="currScore >= 8 && currScore < 10 && counter">
+        <img src="../assets/bg5.png" class="logs-img" v-if="currScore >= 10 && currScore < 12 && counter">
+        <img src="../assets/bg6.png" class="logs-img" v-if="currScore >= 12 && currScore < 14 && counter">
+        <img src="../assets/bg7.png" class="logs-img" v-if="currScore >= 14 && currScore < 16 && counter">
+        <img src="../assets/bg8.png" class="logs-img" v-if="currScore >= 16 && currScore < 18 && counter">
+        <img src="../assets/bg9.png" class="logs-img" v-if="currScore >= 18 && currScore < 20 && counter">
+        <img src="../assets/bg10.png" class="logs-img" v-if="currScore >= 20 && currScore < 22 && counter">
     </div>
 </template>
 
@@ -48,16 +62,18 @@ export default defineComponent({
     },
 
     data() {
+
         return {
             currScore: 0,
-            counter: 10,
+            counter: 20,
             score: 0,
             isLeftBeaver: true,
             isRightBeaver: false,
             isRightLog: true,
             isLeftLog: false,
             catched: false,
-            user:null
+            user: null,
+            userscore: 0,
         }
     },
     methods:
@@ -128,11 +144,17 @@ export default defineComponent({
         await http.get('/user/')
             .then((response) => {
                 this.user = response.data;
+                this.userscore = response.data.score;
                 console.log(response)
             })
             .catch((e) => {
                 console.log(e)
             })
+        if (this.score > this.userscore) {
+            const response = await http.put('/user/update/', {
+                score: this.userscore
+            });
+        } 
     },
     beforeUpdate() {
         this.increment();
@@ -167,6 +189,8 @@ export default defineComponent({
 .btn {
     display: flex;
     justify-content: space-evenly;
+    width: 50%;
+    margin-top: 30px;
 }
 
 .game {
@@ -174,6 +198,8 @@ export default defineComponent({
     flex-direction: column;
     align-items: center;
     width: 100%;
+    z-index: 2;
+    position: relative;
 }
 
 a {
@@ -182,5 +208,43 @@ a {
 
 .beaver-img {
     width: 50%;
+}
+
+.bg {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.logs-img {
+    width: 96%;
+    z-index: 1; 
+    position: absolute; 
+    left: 0;
+    bottom: 0;
+    transform: scale(1.08, 1);
+}
+
+.header {
+    background-color: #060223;
+    font-size: 30px;
+    text-align: center;
+    padding: 20px;
+    color: #7f9e9f;
+    font-weight: 700;
+    z-index: 2;
+}
+
+.timer {
+    font-size: 26px;
+    padding: 30px;
+    font-weight: 700;
+}
+
+.score-info {
+    font-size: 22px;
+    font-size: 26px;
+    margin-bottom: 60px;
+    font-weight: 700;
 }
 </style>
