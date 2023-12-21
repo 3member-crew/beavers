@@ -19,9 +19,23 @@
                     Лидерборд
                 </game-button>
             </router-link>
-            <div class="exit">
-                <router-link to="/">
+            <div v-if="!isAuth">
+                <router-link to="/login">
                     <game-button class="btns">
+                        Войти
+                    </game-button>
+                </router-link>
+            </div>
+                <div v-if="!isAuth">
+                <router-link to="/register">
+                    <game-button class="btns">
+                        Регистрация
+                    </game-button>
+                </router-link>
+            </div>
+            <div class="exit">
+                <router-link to="/login">
+                    <game-button class="btns" @click="handleExit">
                         Выйти
                     </game-button>
                 </router-link>

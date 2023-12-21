@@ -5,7 +5,7 @@
         </div>
         <div class="row-table">
             <div class="name" style="font-size: 26px; font-weight: 700;">
-                Логин
+                Ник
             </div>
             <div class="score" style="font-size: 26px; font-weight: 700;">
                 Результат
@@ -21,7 +21,7 @@
                 </div>
             </div>
         </div>
-        <router-link to="/menu">
+        <router-link to="/">
             <div class="exit">
                 <game-button>
                     Назад

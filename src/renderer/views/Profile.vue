@@ -9,33 +9,19 @@
                 <div class="profile-info">
                     <div>
                         <div>
-                            Логин
+                            Ник
                         </div>
-                        <div class="field">
+                        
+                        <div class="field" v-if="user">
                             <div id="name">
                                 {{user.username}}
                             </div>
-                            <button @click="copyName" id="copy-name">
-                                <img src="../assets/copyButton.png" class="copy-img">
-                            </button>
-                        </div>
-                    </div>
-                    <div>
-                        <div>
-                            ID пользователя
-                        </div>
-                        <div class="field">
-                            <div id="id">
-                                {{user.id}}
-                            </div>
-                            <button @click="copyID" id="copy-id">
-                                <img src="../assets/copyButton.png" class="copy-img">
-                            </button>
+                    
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="scores">
+            <div class="scores" v-if="user">
                 <div>
                     Ваш лучший результат
                 </div>
@@ -44,7 +30,7 @@
                 </div>
             </div>
         </div>
-        <router-link to="/menu">
+        <router-link to="/">
             <div class="exit">
                 <game-button>
                     Вернуться назад
@@ -59,6 +45,7 @@ import { defineComponent, PropType } from "vue"
 import GameButton from "../components/GameButton.vue";
 import axios from "axios";
 import http from "../http_common";
+import User from "../typings/User";
 export default defineComponent({
     components: {
         GameButton
@@ -68,27 +55,7 @@ export default defineComponent({
             user: null,
         };
     },
-    methods: 
-    {
-        copyID() {
-            document.querySelector("#copy-id").addEventListener("click", function() {
-                navigator.clipboard.writeText(document.querySelector("#id").innerText).then(function() {
-                    console.log('Text copied to clipboard');
-                }).catch(function(error) {
-                    console.error('Error:', error);
-                });
-            });
-        },
-        copyName() {
-            document.querySelector("#copy-name").addEventListener("click", function() {
-                navigator.clipboard.writeText(document.querySelector("#name").innerText).then(function() {
-                    console.log('Text copied to clipboard');
-                }).catch(function(error) {
-                    console.error('Error:', error);
-                });
-            });
-        }
-    },
+
     async mounted() {
             await http.get('/user/')
             .then((response) => {
@@ -99,8 +66,7 @@ export default defineComponent({
                 console.log(e)
             })
     }
-    }
-)
+    })
 </script>
 
 <style lang="css" scoped>
