@@ -28,15 +28,17 @@
                 </game-button>
             </div>
         </div>
-        <div class="game-over" v-else>
-            <div> 
-                Ваш результат: {{currScore}}
+        <div style="height: 100vh; display: flex; align-items: center;" v-else>
+            <div class="game-over">
+                <div> 
+                    Ваш результат: {{currScore}}
+                </div>
+                <router-link to="/menu" style="width: 300px; display: flex; justify-content: center; align-items: center;">
+                    <game-button>
+                        Назад
+                    </game-button>
+                </router-link>
             </div>
-            <router-link to="/menu">
-                <game-button>
-                    Вернуться назад
-                </game-button>
-            </router-link>
         </div>
         <img src="../assets/bg1.png" class="logs-img" v-if="currScore >= 2 && currScore < 4 && counter">
         <img src="../assets/bg2.png" class="logs-img" v-if="currScore >= 4 && currScore < 6 && counter">
@@ -175,11 +177,13 @@ export default defineComponent({
 .game-over {
     display: flex;
     flex-direction: column;
-    color: white;
-    background-color: #7e727e;
+    align-items: center;
+    color: #2f1e1e;
+    background-color: #b8cece;
     border-radius: 5px;
     font-size: 26px;
     padding: 40px;
+    font-weight: 700;
 }
 
 .bounty-rune {
