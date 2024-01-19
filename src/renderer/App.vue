@@ -2,28 +2,24 @@
 </script>
 
 <template>
-  <div class="main">
-    <router-view>
-    </router-view>
-  </div>
+  <router-view>
+  </router-view>
 </template>
 
 <style lang="css">
+  @import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;500&display=swap');
+
   body {
     margin: 0;
     padding: 0;
-    font-family: 'Kanit', sans-serif;
-
-  }
-  .main {
-    display: flex;
-    justify-content: center;
-    width: 100%;
+    font-family: 'Comfortaa', sans-serif;
+    color: white;
+    background-color: #060223;
   }
 
   #app {
     display: flex;
+    justify-content: center;
     align-items: center;
-    height: 100vh;
   }
 </style>

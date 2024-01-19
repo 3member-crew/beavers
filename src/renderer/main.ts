@@ -1,10 +1,8 @@
-import Vue from 'vue';
 import { createApp } from 'vue';
-import App from './App.vue';
+import App from './MemoryGame.vue';
 import router from './router';
-import 'bootstrap';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import { GameStore, GameStoreKey } from './stores'
 
 createApp(App)
-    .use(router)
+    .use(GameStore, GameStoreKey)
     .mount('#app');

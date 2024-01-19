@@ -1,18 +1,16 @@
 {
-    "compilerOptions": {
-      "target": "esnext",
-      "useDefineForClassFields": true,
-      "module": "esnext",
-      "moduleResolution": "node",
-      "strict": true,
-      "jsx": "preserve",
-      "sourceMap": true,
-      "resolveJsonModule": true,
-      "esModuleInterop": true,
-      "lib": ["esnext", "dom", "es6", "dom.iterable", "scripthost"],
-      "typeRoots": ["./node_modules/phaser/types"],
-      "types": ["vite/client", "Phaser"]
-    },
-    "include": ["./**/*.ts", "./**/*.d.ts", "./**/*.tsx", "./**/*.vue"],
-  }
-  
+  "compilerOptions": {
+    "target": "esnext",
+    "useDefineForClassFields": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "strict": true,
+    "jsx": "preserve",
+    "sourceMap": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "lib": ["esnext", "dom"],
+    "types": ["vite/client", "node"]
+  },
+  "include": ["./**/*.ts", "./**/*.d.ts", "./**/*.tsx", "./**/*.vue"],
+}
