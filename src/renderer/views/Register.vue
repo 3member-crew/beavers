@@ -1,18 +1,18 @@
 <template>
-    <div class="login">
+    <div class="register">
         <div class="header">
-            Авторизация
+            Регистрация
         </div>
-        <form @submit.prevent="login">
+        <form @submit.prevent="register">
             <div class="form">
                 <input v-model="username" type="text" placeholder="Имя пользователя" required>
                 <input v-model="email" type="text" placeholder="Почта" required>
-                    <input v-model="password" type="password" placeholder="Пароль" required id="password">
+                <input v-model="password" type="password" placeholder="Пароль" required id="password">
                 <div class="in">
-                  <!--check login and password-->
-                        <game-button type="submit" class="enter">
-                            Войти  
-                        </game-button>
+                  <!--check register and password-->
+                    <game-button type="submit" class="enter">
+                        Войти  
+                    </game-button>
                 </div>
                 <div class="in">
                     <router-link to="/">
@@ -20,7 +20,7 @@
                             Вернуться 
                         </game-button>
                     </router-link>
-                    </div>
+                </div>
             </div>
         </form>
     </div>
@@ -29,6 +29,7 @@
 <script lang="ts">
     import http from "../http_common";
     import GameButton from "../components/GameButton.vue";
+    import router from "../router";
 
     export default {
         components: {
@@ -44,7 +45,7 @@
         },
 
         methods: {
-            async login() {
+            async register() {
                 try {
                     const response = await http.post('/register/', {
                         username: this.username,
@@ -55,7 +56,8 @@
                     const token = response.data.token;
 
                 if (token) {
-                    localStorage.setItem('token', token)
+                    this.$router.push("/");
+                    localStorage.setItem('token', token);
                 }
             } catch (error) {
                 console.error(error);
@@ -66,6 +68,13 @@
 </script>
 
 <style scoped lang="css">
+.login-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
 .header {
     background-color: #060223;
     font-size: 30px;
@@ -75,25 +84,21 @@
     font-weight: 700;
 }
 
-.exit {
-    display: flex;
-    position: absolute;
-    justify-content: flex-end;
-    width: 40%;
-    bottom: 2em;
-    right: 2em;
-}
-
 .form {
     display: flex;
     flex-direction: column;
     background-color: #b8cece;
-    height: 50vh;
-    width: 100%;
-    align-items: flex-start;
-    justify-content: space-evenly;
     border-radius: 5px;
     padding: 10px;
+    align-items: center;
+}
+
+.form input {
+    margin-bottom: 10px;
+}
+
+.form div {
+    margin-bottom: 10px;
 }
 
 input {
@@ -101,17 +106,12 @@ input {
     background: none;
     border: 3px solid #8496ae;
     border-radius: 10px;
-    width: 75%;
     font-size: 20px;
     font-family: 'Comfortaa', sans-serif;
 }
 
 input:focus {
     outline: none;
-}
-
-.login {
-    width: 25%;
 }
 
 .pwrd {
@@ -129,20 +129,28 @@ input:focus {
     border: 3px solid #8496ae;
     border-radius: 10px;
     background: #8496ae;
-    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .show:hover {
-    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
-}
-
-.in {
-    display: flex;
-    width: 100%;
-    justify-content: center;
+    box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
 }
 
 .enter {
     font-size: 24px;
+    cursor: pointer;
+}
+
+.reg {
+    font-style: italic;
+    color: rgb(87, 83, 83);
+}
+
+.reg:hover {
+    text-decoration: underline;
+}
+
+a {
+    text-decoration: none;
 }
 </style>

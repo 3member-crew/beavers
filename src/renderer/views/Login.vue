@@ -1,5 +1,5 @@
 <template>
-    <div class="login">
+    <div class="login-form">
         <div class="header">
             Авторизация
         </div>
@@ -7,24 +7,13 @@
             <div class="form">
                 <input v-model="username" type="text" placeholder="Имя пользователя" required>
                 <input v-model="password" type="password" placeholder="Пароль" required id="password">
-                <div class="in">
+                <div>
                     <!--check login and password-->
                     <game-button type="submit" class="enter">
                         Войти
                     </game-button>
-
-
-
-
                 </div>
-                <div class="in" v-if="isAuth">
-                    <router-link to="/">
-                        <game-button class="enter">
-                            Вернуться
-                        </game-button>
-                    </router-link>
-                </div>
-                <div class="in">
+                <div>
                     <router-link to="/register">
                         <a class="reg">Еще нет аккаунта?</a>
                     </router-link>
@@ -63,8 +52,9 @@ export default {
                 const token = response.data.token;
 
                 if (token) {
-                    localStorage.setItem('token', token)
-                    this.isAuth = true
+                    localStorage.setItem('token', token);
+                    this.isAuth = true;
+                    this.$router.push("/");
                 }
             } catch (error) {
                 console.error(error);
@@ -75,6 +65,13 @@ export default {
 </script>
 
 <style scoped lang="css">
+.login-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
 .header {
     background-color: #060223;
     font-size: 30px;
@@ -84,25 +81,21 @@ export default {
     font-weight: 700;
 }
 
-.exit {
-    display: flex;
-    position: absolute;
-    justify-content: flex-end;
-    width: 40%;
-    bottom: 2em;
-    right: 2em;
-}
-
 .form {
     display: flex;
     flex-direction: column;
     background-color: #b8cece;
-    height: 50vh;
-    width: 100%;
-    align-items: flex-start;
-    justify-content: space-evenly;
     border-radius: 5px;
     padding: 10px;
+    align-items: center;
+}
+
+.form input {
+    margin-bottom: 10px;
+}
+
+.form div {
+    margin-bottom: 10px;
 }
 
 input {
@@ -110,17 +103,12 @@ input {
     background: none;
     border: 3px solid #8496ae;
     border-radius: 10px;
-    width: 75%;
     font-size: 20px;
     font-family: 'Comfortaa', sans-serif;
 }
 
 input:focus {
     outline: none;
-}
-
-.login {
-    width: 25%;
 }
 
 .pwrd {
@@ -145,14 +133,9 @@ input:focus {
     box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
 }
 
-.in {
-    display: flex;
-    width: 100%;
-    justify-content: center;
-}
-
 .enter {
     font-size: 24px;
+    cursor: pointer;
 }
 
 .reg {

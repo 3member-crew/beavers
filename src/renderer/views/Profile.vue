@@ -14,7 +14,7 @@
                         
                         <div class="field" v-if="user">
                             <div id="name">
-                                {{user.username}}
+                                {{ user.username }}
                             </div>
                     
                         </div>
@@ -51,11 +51,9 @@ export default defineComponent({
         GameButton
     },
     data() {
-        return {
-            user: null,
-        };
+        const info: User[] = []
+        return { info };
     },
-
     async mounted() {
             await http.get('/user/')
             .then((response) => {

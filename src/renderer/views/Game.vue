@@ -33,7 +33,7 @@
                 <div> 
                     Ваш результат: {{currScore}}
                 </div>
-                <router-link to="/menu" style="width: 300px; display: flex; justify-content: center; align-items: center;">
+                <router-link to="/" style="width: 300px; display: flex; justify-content: center; align-items: center;">
                     <game-button>
                         Назад
                     </game-button>
@@ -73,7 +73,7 @@ export default defineComponent({
             isRightBeaver: false,
             isRightLog: true,
             isLeftLog: false,
-            catched: false,
+            caught: false,
             user: null,
             userscore: 0,
         }
@@ -81,13 +81,13 @@ export default defineComponent({
     methods:
     {
         increment() {
-            if (this.isRightBeaver && this.isRightLog && !this.catched) {
-                this.catched = true;
+            if (this.isRightBeaver && this.isRightLog && !this.caught) {
+                this.caught = true;
                 this.currScore++;
             }
             else {
-                if (this.isLeftBeaver && this.isLeftLog && !this.catched) {
-                    this.catched = true;
+                if (this.isLeftBeaver && this.isLeftLog && !this.caught) {
+                    this.caught = true;
                     this.currScore++;
                 }
             }
@@ -114,14 +114,14 @@ export default defineComponent({
             setTimeout(() => {
                 this.isLeftLog = true;
                 this.isRightLog = false;
-                this.catched = false;
+                this.caught = false;
             }, 1000);
         },
         toRightBounty() {
             setTimeout(() => {
                 this.isLeftLog = false;
                 this.isRightLog = true;
-                this.catched = false;
+                this.caught = false;
             }, 1000);
         },
         bountyLoop() {
