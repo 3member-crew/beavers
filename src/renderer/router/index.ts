@@ -7,36 +7,40 @@ import Login from '../views/Login.vue';
 import Register from '../views/Register.vue';
 const routes: Array<RouteRecordRaw> = [
   {
-    path: '/',
-    name: 'Menu',
-    component: Menu,
+    path: '/login',
+    name: 'Login',
+    component: Login,
   },
   {
     path: '/profile',
     name: 'Profile',
-    component: Profile
-},
-{
+    component: Profile,
+    meta: { requiresAuth: true },
+  },
+  {
     path: '/game',
     name: 'Game',
     component: Game,
-    //meta: { requiresAuth: true },
-},
-{
+  },
+  {
     path: '/leaderboard',
     name: 'LeaderBoard',
     component: Leaderboard
-},
-{
-  path: '/login',
-  name: 'Login',
-  component: Login,
-},
-{
-  path: '/register',
-  name: 'Register',
-  component: Login,
-},
+  },
+  {
+    path: '/',
+    name: 'Menu',
+    component: Menu,
+  },
+    path: '/login',
+    name: 'Login',
+    component: Login,
+  },
+  {
+    path: '/register',
+    name: 'Register',
+    component: Login,
+  },
 ]
 
 const router = createRouter({

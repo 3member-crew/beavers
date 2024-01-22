@@ -13,8 +13,8 @@
     margin: 0;
     padding: 0;
     font-family: 'Comfortaa', sans-serif;
-    color: white;
     background-color: #060223;
+    color: #7f9e9f;
   }
 
   #app {

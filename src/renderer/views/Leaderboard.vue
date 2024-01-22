@@ -1,11 +1,11 @@
-<template lang="">
+<template>
     <div class="leaderboard">
         <div class="header">
             Таблица лидеров
         </div>
         <div class="row-table">
             <div class="name" style="font-size: 26px; font-weight: 700;">
-                Логин
+                Ник
             </div>
             <div class="score" style="font-size: 26px; font-weight: 700;">
                 Результат
@@ -30,13 +30,11 @@
         </router-link>
     </div>
 </template>
-
 <script lang="ts">
     import { Component, defineComponent } from "vue";
     import GameButton from "../components/GameButton.vue";
     import User from "../typings/User"
     import http from "../http_common";
-
     export default defineComponent({
         components: {
             GameButton
