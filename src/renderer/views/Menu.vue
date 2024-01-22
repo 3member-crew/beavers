@@ -4,9 +4,9 @@
             Меню
         </div>
         <div class="buttons">
-            <router-link to="/game">
+            <router-link to="/game">    
                 <game-button class="btns">
-                    Играть
+                    Настроить игру
                 </game-button>
             </router-link>
             <router-link to="/profile">
@@ -54,7 +54,10 @@ export default defineComponent({
     data() {
         let isAuth: Boolean = false 
         return {       
-            isAuth
+            isAuth,
+            firstGame: true,
+            timer: 30,
+            balloons: 3,
         };
     },
     async mounted() {
@@ -62,6 +65,10 @@ export default defineComponent({
     },
 
     methods: {
+        startGame(){
+            this.firstGame = false
+            this.$emit("startGame", {time: this.timer, balloons: this.balloons})
+        },
         async handleExit() {
             localStorage.removeItem('token');
         },

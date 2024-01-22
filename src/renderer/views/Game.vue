@@ -1,175 +1,150 @@
-<template>
-    <div class="bg">
-        <div class="game" v-if="counter !== 0">
-            <div class="timer">
-                Осталось: {{ counter }}
-            </div>
-            <div class="score-info">
-                Ваш счет: {{ currScore }}
-            </div>
-            <div class="objects">
-                <img src="../assets/log.png" class="bounty-rune" v-if="isLeftLog">
-                <div style="width: 170.66px; height: 200px;" v-else>
-                </div>
-                <div style="display: flex; justify-content: center;">
-                    <img src="../assets/beaverLeft.png" v-if="isLeftBeaver" class="beaver-img">
-                    <img src="../assets/beaverRight.png" v-else class="beaver-img">
-                </div>
-                <img src="../assets/log.png" class="bounty-rune" v-if="isRightLog">
-                <div style="width: 170.66px; height: 200px;" v-else>
-                </div>
-            </div>
-            <div class="btn">
-                <game-button @click="toLeftBeaver" style="width: 200px">
-                    Влево
-                </game-button>
-                <game-button @click="toRightBeaver" style="width: 200px">
-                    Вправо
-                </game-button>
-            </div>
-        </div>
-        <div style="height: 100vh; display: flex; align-items: center;" v-else>
-            <div class="game-over">
-                <div> 
-                    Ваш результат: {{currScore}}
-                </div>
-                <router-link to="/" style="width: 300px; display: flex; justify-content: center; align-items: center;">
-                    <game-button>
-                        Назад
-                    </game-button>
-                </router-link>
-            </div>
-        </div>
-        <img src="../assets/bg1.png" class="logs-img" v-if="currScore >= 2 && currScore < 4 && counter">
-        <img src="../assets/bg2.png" class="logs-img" v-if="currScore >= 4 && currScore < 6 && counter">
-        <img src="../assets/bg3.png" class="logs-img" v-if="currScore >= 6 && currScore < 8 && counter">
-        <img src="../assets/bg4.png" class="logs-img" v-if="currScore >= 8 && currScore < 10 && counter">
-        <img src="../assets/bg5.png" class="logs-img" v-if="currScore >= 10 && currScore < 12 && counter">
-        <img src="../assets/bg6.png" class="logs-img" v-if="currScore >= 12 && currScore < 14 && counter">
-        <img src="../assets/bg7.png" class="logs-img" v-if="currScore >= 14 && currScore < 16 && counter">
-        <img src="../assets/bg8.png" class="logs-img" v-if="currScore >= 16 && currScore < 18 && counter">
-        <img src="../assets/bg9.png" class="logs-img" v-if="currScore >= 18 && currScore < 20 && counter">
-        <img src="../assets/bg10.png" class="logs-img" v-if="currScore >= 20 && currScore < 22 && counter">
+<template >
+    <Modal @startGame="startGame" :accuracy="calcAccuracy" :points="calcPoints" v-show="gameEnd"></Modal>
+    <div class="playground" @click="addClick" v-if="!gameEnd">
+      <TopScoreBoard :accuracy="calcAccuracy" :points="calcPoints" :time="timer" @endGame="endGame"></TopScoreBoard>
+      <Balloon v-for="balloon in balloons" :key="balloon.id"
+               :balloon="balloon" @pop="removeBalloon"
+      ></Balloon>
     </div>
-</template>
+  
+  </template>
 
 <script lang="ts">
 import { defineComponent, PropType } from "vue"
 import GameButton from "../components/GameButton.vue";
 import http from "../http_common";
+import Balloon from "../components/Balloon.vue";
+import TopScoreBoard from "../components/TopScoreBoard.vue";
+import Modal from "../components/Modal.vue";
 
 export default defineComponent({
+    name: 'App',
     components: {
-        GameButton
+        Modal,
+        Balloon, TopScoreBoard
     },
-
-    data() {
-
-        return {
-            currScore: 0,
-            counter: 20,
-            score: 0,
-            isLeftBeaver: true,
-            isRightBeaver: false,
-            isRightLog: true,
-            isLeftLog: false,
-            caught: false,
-            user: null,
-            userscore: 0,
+    data(){
+        return{
+            maxWidth: 0,
+            maxHeight: 0,
+            balloons: Array(),
+            lastId: 0,
+            numBalloons: 5,
+            timer: 30,
+            hits: 0,
+            clicks: 0,
+            gameEnd: true,
         }
     },
-    methods:
-    {
-        increment() {
-            if (this.isRightBeaver && this.isRightLog && !this.caught) {
-                this.caught = true;
-                this.currScore++;
-            }
-            else {
-                if (this.isLeftBeaver && this.isLeftLog && !this.caught) {
-                    this.caught = true;
-                    this.currScore++;
+    methods: {
+        removeBalloon(id){
+            this.balloons = this.balloons.filter(balloon=> balloon.id !== id)
+            this.generateNewBalloon()
+            this.hits += 1
+        },
+        removeAllBalloons(){
+            this.balloons = []
+        },
+        endGame(){
+            this.removeAllBalloons()
+            this.gameEnd = true
+        },
+        addClick(){
+            this.clicks += 1
+        },
+        generateNewBalloon(){
+            let generateDistance = true
+            let newX = 0
+            let newY = 0
+            const widthRange = this.maxWidth * 0.5;
+            const heightRange = this.maxHeight * 0.5;
+            while(generateDistance){
+                newX = (Math.random() * widthRange) + (this.maxWidth * 0.25);
+                newY = (Math.random() * heightRange) + (this.maxHeight * 0.25);
+                generateDistance = this.checkDistance(newX, newY)
+        }
+            this.lastId += 1
+            let balloon = {
+                id: this.lastId,
+                x: newX,
+                y: newY
+        }
+            this.balloons.push(balloon)
+        },
+        checkDistance(x,y){
+            for(let ball of this.balloons){
+                let distance = this.distanceBetweenPoints(x,ball.x, y, ball.y)
+                if(distance<150){
+                    return true
                 }
             }
+            return false
         },
-        countDown() {
-            if (this.counter) {
-                return setTimeout(() => {
-                    --this.counter
-                    this.countDown()
-                }, 1000)
+        distanceBetweenPoints(x1,x2,y1,y2){
+            let a = x1 - x2;
+            let b = y1 - y2;
+            let c = Math.sqrt( a*a + b*b );
+            return c
+        },
+        startGame(data){
+            this.numBalloons = data.balloons
+            this.timer = data.time
+            this.gameEnd = false
+            this.hits = 0
+            this.clicks = 0
+            for(let i = 0; i<this.numBalloons; i++){
+                this.generateNewBalloon()
             }
+        }
+    },
+    computed: {
+        calcAccuracy(){
+            if(this.clicks===0){
+                return 100
+            }
+            let acc = this.hits * 100 / this.clicks
+            return acc.toFixed(2)
+        },
+        calcPoints(){
+            let positivePoints = this.hits * 10
+            let negativePoints = (this.clicks-this.hits) * 5
+            return positivePoints - negativePoints
+        }
+    },
+    beforeMount() {
+        const body = document.querySelector('body');
 
-            this.score = this.currScore;
-        },
-        toLeftBeaver() {
-            this.isRightBeaver = false;
-            this.isLeftBeaver = true;
-        },
-        toRightBeaver() {
-            this.isLeftBeaver = false;
-            this.isRightBeaver = true;
-        },
-        toLeftBounty() {
-            setTimeout(() => {
-                this.isLeftLog = true;
-                this.isRightLog = false;
-                this.caught = false;
-            }, 1000);
-        },
-        toRightBounty() {
-            setTimeout(() => {
-                this.isLeftLog = false;
-                this.isRightLog = true;
-                this.caught = false;
-            }, 1000);
-        },
-        bountyLoop() {
-            if (this.isRightLog) {
-                this.toLeftBounty();
-            }
-            else {
-                this.toRightBounty();
-            }
-        },
-        randomNum() {
-            var random = Math.random();
+        const bodyHeight = body!.offsetHeight;
+        const bodyWidth = body!.offsetWidth;
 
-            if (random < 0.34)
-                return 1;
-
-            return random;
-        },
-        handleSubmit() {
-            if (this.score > this.userscore) {
-                const response = http.put('/user/update/', {
-                    score: this.score
-                });
-            }
-        },
-    },
-    async mounted() {
-        this.countDown();
-        await http.get('/user/')
-            .then((response) => {
-                this.user = response.data;
-                this.userscore = response.data.score;
-                console.log(response)
-            })
-            .catch((e) => {
-                console.log(e)
-            })
-    },
-    beforeUpdate() {
-        this.increment();
-    },
-    updated() {
-        this.bountyLoop();
-    },
+        this.maxHeight = bodyHeight
+        this.maxWidth = bodyWidth
+    }
 })
 </script>
 
 <style lang="css" scoped>
+body{
+  background-image: url("assets/bg.png");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  background-attachment: fixed;
+  min-height: 100vh;
+  padding: 0;
+  margin: 0;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+
+}
+.playground{
+  cursor: crosshair;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
 .objects {
     display: flex;
     justify-content: space-evenly;
