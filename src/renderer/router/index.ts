@@ -1,11 +1,10 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 import Menu from '../views/Menu.vue'
 import Profile from "../views/Profile.vue";
-import Game from "../views/Game.vue";
+import Game from "../MemoryGame.vue";
 import Leaderboard from "../views/Leaderboard.vue";
 import Login from '../views/Login.vue';
 import Register from '../views/Register.vue';
-
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/login',
@@ -17,27 +16,31 @@ const routes: Array<RouteRecordRaw> = [
     name: 'Profile',
     component: Profile,
     meta: { requiresAuth: true },
-},
-{
+  },
+  {
     path: '/game',
     name: 'Game',
     component: Game,
-},
-{
+  },
+  {
     path: '/leaderboard',
     name: 'LeaderBoard',
     component: Leaderboard
-},
-{
-  path: '/',
-  name: 'Menu',
-  component: Menu,
-},
-{
-  path: '/register',
-  name: 'Register',
-  component: Register,
-},
+  },
+  {
+    path: '/',
+    name: 'Menu',
+    component: Menu,
+  },
+    path: '/login',
+    name: 'Login',
+    component: Login,
+  },
+  {
+    path: '/register',
+    name: 'Register',
+    component: Login,
+  },
 ]
 
 const router = createRouter({

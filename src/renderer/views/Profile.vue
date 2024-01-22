@@ -9,19 +9,33 @@
                 <div class="profile-info">
                     <div>
                         <div>
-                            Ник
+                            Логин
                         </div>
-                        
-                        <div class="field" v-if="user">
+                        <div class="field">
                             <div id="name">
-                                {{ user.username }}
+                                {{user.username}}
                             </div>
-                    
+                            <button @click="copyName" id="copy-name">
+                                <img src="../assets/copyButton.png" class="copy-img">
+                            </button>
+                        </div>
+                    </div>
+                    <div>
+                        <div>
+                            ID пользователя
+                        </div>
+                        <div class="field">
+                            <div id="id">
+                                {{user.id}}
+                            </div>
+                            <button @click="copyID" id="copy-id">
+                                <img src="../assets/copyButton.png" class="copy-img">
+                            </button>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="scores" v-if="user">
+            <div class="scores">
                 <div>
                     Ваш лучший результат
                 </div>

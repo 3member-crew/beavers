@@ -45,14 +45,14 @@
             return { info };
         },
         async mounted() {
-                await http.get('/users/')
-                .then((response) => {
-                    this.info = response.data;
-                    console.log(response)
-                })
-                .catch((e) => {
-                    console.log(e)
-                })
+            await http.get('/users/')
+            .then((response) => {
+                this.info = response.data;
+                console.log(response)
+            })
+            .catch((e) => {
+                console.log(e)
+            })
         }
     })
 </script>

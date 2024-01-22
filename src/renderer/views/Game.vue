@@ -57,6 +57,7 @@
 import { defineComponent, PropType } from "vue"
 import GameButton from "../components/GameButton.vue";
 import http from "../http_common";
+import User from "../typings/User"
 
 export default defineComponent({
     components: {
@@ -64,18 +65,22 @@ export default defineComponent({
     },
 
     data() {
+        var user: User = {
+            id: null,
+            username: "",
+            score: 0
+        }
 
         return {
             currScore: 0,
-            counter: 20,
+            counter: 100,
             score: 0,
             isLeftBeaver: true,
             isRightBeaver: false,
             isRightLog: true,
             isLeftLog: false,
             caught: false,
-            user: null,
-            userscore: 0,
+            user
         }
     },
     methods:
@@ -160,12 +165,24 @@ export default defineComponent({
                 console.log(e)
             })
     },
-    beforeUpdate() {
-        this.increment();
-    },
     updated() {
+        this.increment();
         this.bountyLoop();
     },
+    async unmounted() {
+        if (this.user !== null) {
+            if (this.user.score < this.score) {
+                try { 
+                    const response = await http.put('/user/update', { 
+                            score: this.score 
+                            }); 
+                }
+                catch (error) { 
+                    console.error(error); 
+                }
+            }
+        }
+    }
 })
 </script>
 
