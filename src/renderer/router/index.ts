@@ -8,14 +8,15 @@ import Register from '../views/Register.vue';
 
 const routes: Array<RouteRecordRaw> = [
   {
-    path: '/',
+    path: '/login',
     name: 'Login',
     component: Login,
   },
   {
     path: '/profile',
     name: 'Profile',
-    component: Profile
+    component: Profile,
+    meta: { requiresAuth: true },
 },
 {
     path: '/game',
@@ -28,7 +29,7 @@ const routes: Array<RouteRecordRaw> = [
     component: Leaderboard
 },
 {
-  path: '/menu',
+  path: '/',
   name: 'Menu',
   component: Menu,
 },

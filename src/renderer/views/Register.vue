@@ -6,20 +6,21 @@
         <form @submit.prevent="login">
             <div class="form">
                 <input v-model="username" type="text" placeholder="Имя пользователя" required>
-                <div class="pwrd">
+                <input v-model="email" type="text" placeholder="Почта" required>
                     <input v-model="password" type="password" placeholder="Пароль" required id="password">
-                    <button @click="showPassword" class="show">
-                        <img src="../assets/showPassword.png" class="pwrd-img" v-if="!isShow">
-                        <img src="../assets/closePassword.png" class="pwrd-img" v-else>
-                    </button>
+                <div class="in">
+                  <!--check login and password-->
+                        <game-button type="submit" class="enter">
+                            Войти  
+                        </game-button>
                 </div>
                 <div class="in">
-                    <router-link to="/menu"> <!--check login and password-->
-                        <game-button type="submit" class="enter">
-                            Войти
+                    <router-link to="/">
+                        <game-button class="enter">
+                            Вернуться 
                         </game-button>
                     </router-link>
-                </div>
+                    </div>
             </div>
         </form>
     </div>

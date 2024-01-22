@@ -2,22 +2,22 @@
     <div class="bg">
         <div class="game" v-if="counter !== 0">
             <div class="timer">
-                Осталось: {{counter}}
+                Осталось: {{ counter }}
             </div>
             <div class="score-info">
-                Ваш счет: {{currScore}}
+                Ваш счет: {{ currScore }}
             </div>
             <div class="objects">
-                    <img src="../assets/log.png" class="bounty-rune" v-if="isLeftLog">
-                    <div style="width: 170.66px; height: 200px;" v-else>
-                    </div>
+                <img src="../assets/log.png" class="bounty-rune" v-if="isLeftLog">
+                <div style="width: 170.66px; height: 200px;" v-else>
+                </div>
                 <div style="display: flex; justify-content: center;">
                     <img src="../assets/beaverLeft.png" v-if="isLeftBeaver" class="beaver-img">
                     <img src="../assets/beaverRight.png" v-else class="beaver-img">
                 </div>
-                    <img src="../assets/log.png" class="bounty-rune" v-if="isRightLog">
-                    <div style="width: 170.66px; height: 200px;" v-else>
-                    </div>
+                <img src="../assets/log.png" class="bounty-rune" v-if="isRightLog">
+                <div style="width: 170.66px; height: 200px;" v-else>
+                </div>
             </div>
             <div class="btn">
                 <game-button @click="toLeftBeaver" style="width: 200px">
@@ -139,7 +139,14 @@ export default defineComponent({
                 return 1;
 
             return random;
-        }
+        },
+        handleSubmit() {
+            if (this.score > this.userscore) {
+                const response = http.put('/user/update/', {
+                    score: this.score
+                });
+            }
+        },
     },
     async mounted() {
         this.countDown();
@@ -152,11 +159,6 @@ export default defineComponent({
             .catch((e) => {
                 console.log(e)
             })
-        if (this.score > this.userscore) {
-            const response = await http.put('/user/update/', {
-                score: this.userscore
-            });
-        } 
     },
     beforeUpdate() {
         this.increment();
@@ -222,8 +224,8 @@ a {
 
 .logs-img {
     width: 96%;
-    z-index: 1; 
-    position: absolute; 
+    z-index: 1;
+    position: absolute;
     left: 0;
     bottom: 0;
     transform: scale(1.08, 1);
