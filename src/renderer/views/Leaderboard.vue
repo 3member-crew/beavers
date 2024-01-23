@@ -34,7 +34,7 @@
     import { Component, defineComponent } from "vue";
     import GameButton from "../components/GameButton.vue";
     import User from "../typings/User"
-    import http from "../http_common";
+    import createClient from "../http_common";
     export default defineComponent({
         components: {
             GameButton
@@ -44,15 +44,16 @@
             const info: User[] = []
             return { info };
         },
-        async mounted() {
-                await http.get('/users/')
-                .then((response) => {
-                    this.info = response.data;
-                    console.log(response)
-                })
-                .catch((e) => {
+        async beforeMount() {
+            const http = createClient();
+            await http.get('users/')
+            .then((response) => {
+                this.info = response.data;
+                console.log(response)
+            })
+            .catch((e) => {
                     console.log(e)
-                })
+            })
         }
     })
 </script>

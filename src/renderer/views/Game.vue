@@ -10,18 +10,19 @@
   </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from "vue"
+import { defineComponent, PropType } from "vue";
 import GameButton from "../components/GameButton.vue";
-import http from "../http_common";
+import createClient from "../http_common";
 import Balloon from "../components/Balloon.vue";
 import TopScoreBoard from "../components/TopScoreBoard.vue";
 import Modal from "../components/Modal.vue";
+import { HttpStatusCode } from "axios";
 
 export default defineComponent({
     name: 'App',
     components: {
         Modal,
-        Balloon, TopScoreBoard
+        Balloon, TopScoreBoard, GameButton
     },
     data(){
         return{
@@ -34,6 +35,8 @@ export default defineComponent({
             hits: 0,
             clicks: 0,
             gameEnd: true,
+            username: '',
+            userscore: 0,
         }
     },
     methods: {
@@ -113,7 +116,15 @@ export default defineComponent({
             return positivePoints - negativePoints
         }
     },
-    beforeMount() {
+    async beforeUnmount() {
+        const http = createClient();
+        if (this.hits > this.userscore) {
+            await http.post('user/update/', {
+                score: this.hits
+            });
+        }
+    },
+    async beforeMount() {
         const body = document.querySelector('body');
 
         const bodyHeight = 100;
@@ -121,7 +132,20 @@ export default defineComponent({
 
         this.maxHeight = bodyHeight
         this.maxWidth = bodyWidth
-    }
+        const http = createClient();
+
+        await http.get('profile/')
+            .then((response) => {
+                this.username = response.data.username;
+                this.userscore = response.data.score;
+                console.log(response)
+            })
+            .catch((e) => {
+                console.log(e)
+            })
+
+    },
+
 })
 </script>
 

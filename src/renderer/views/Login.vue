@@ -24,7 +24,7 @@
 </template>
 
 <script lang="ts">
-import http from "../http_common";
+import createClient from "../http_common";
 import GameButton from "../components/GameButton.vue";
 
 export default {
@@ -44,7 +44,8 @@ export default {
     methods: {
         async login() {
             try {
-                const response = await http.post('/login/', {
+                const http = createClient();
+                const response = await http.post('login/', {
                     username: this.username,
                     password: this.password,
                 });

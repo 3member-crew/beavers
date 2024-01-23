@@ -44,18 +44,18 @@
 import { defineComponent, PropType } from "vue"
 import GameButton from "../components/GameButton.vue";
 import axios from "axios";
-import http from "../http_common";
+import createClient from "../http_common";
 import User from "../typings/User";
 export default defineComponent({
     components: {
         GameButton
     },
     data() {
-        const info: User[] = []
-        return { info };
+        return { user: null };
     },
-    async mounted() {
-            await http.get('/user/')
+    async beforeMount() {
+        const http = createClient();
+        await http.get('profile/')
             .then((response) => {
                 this.user = response.data;
                 console.log(response)
@@ -64,6 +64,7 @@ export default defineComponent({
                 console.log(e)
             })
     }
+
     })
 </script>
 

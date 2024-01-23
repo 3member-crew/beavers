@@ -27,7 +27,7 @@
 </template>
 
 <script lang="ts">
-    import http from "../http_common";
+    import createClient from "../http_common";
     import GameButton from "../components/GameButton.vue";
     import router from "../router";
 
@@ -47,7 +47,8 @@
         methods: {
             async register() {
                 try {
-                    const response = await http.post('/register/', {
+                    const http = createClient();
+                    const response = await http.post('register/', {
                         username: this.username,
                         email: this.email,
                         password: this.password,

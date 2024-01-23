@@ -1,9 +1,14 @@
 import axios from "axios";
 
-export default axios.create({
+function createClient() {
+  const token = localStorage.getItem('token');
+  const client = axios.create({
   baseURL: "http://localhost:8000/api/",
   headers: {
     "Content-type": "application/json",
-    'Authorization': 'Bearer '+ localStorage.getItem('token')
-  }
-});
+    'Authorization': token ? `Token ${token}` : null,
+    },
+  });
+  return client; 
+}
+export default createClient;
