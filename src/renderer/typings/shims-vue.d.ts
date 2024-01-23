@@ -4,3 +4,7 @@ declare module '*.vue' {
   const component: DefineComponent<{}, {}, any>
   export default component
 }
+
+declare module 'vuex-class';
+declare module 'vue-property-decorator';
+declare module 'vuex-module-decorators';
