@@ -1,7 +1,7 @@
 <template>
   <div class="backdrop" @click.self="closeModal">
     <div class="modal">
-      <img v-if="firstGame" class="game-preview" src="../assets/preview.jpg">
+      <img v-if="firstGame" class="game-preview">
       <div v-else class="last-game-details">
         <div class="game-details">
           <h1 class="game-title">Предыдущая игра:</h1>
@@ -19,6 +19,13 @@
 
         {{playGameText}}
       </button>
+      <div v-if="!this.firstGame">
+        <router-link to="/">
+          <button class="start-game">
+            Вернуться в меню
+          </button>
+        </router-link>
+      </div>
     </div>
   </div>
 </template>
@@ -97,6 +104,7 @@ export default {
   width: 100%;
   cursor: pointer;
   border: 0;
+  margin-bottom: 20px;
 }
 
 .game-details{
