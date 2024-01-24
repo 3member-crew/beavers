@@ -24,6 +24,8 @@
     font-family: 'Comfortaa', sans-serif;
     font-size: 26px;
     font-weight: 700;
+    -webkit-app-region: no-drag;
+    text-decoration: none;
 }
 .btn:hover {
     background-color: #0a2d2b;

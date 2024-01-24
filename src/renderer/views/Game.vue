@@ -170,6 +170,7 @@ body{
   flex-direction: column;
   height: 100vh;
   width: 100vw;
+  -webkit-app-region: no-drag;
 }
 
 .objects {

@@ -24,5 +24,6 @@ export default {
   height: 104px;
   width: 106px;
   position: absolute;
+  -webkit-app-region: no-drag;
 }
 </style>

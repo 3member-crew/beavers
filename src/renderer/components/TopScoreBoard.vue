@@ -102,7 +102,7 @@ h2{
 
 .stats-title{
   width: 100%;
-  max-width: 55px;
+  max-width: 100px;
 }
 
 .stats-score{

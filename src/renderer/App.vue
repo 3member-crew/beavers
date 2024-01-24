@@ -15,6 +15,7 @@
     font-family: 'Comfortaa', sans-serif;
     background-color: #060223;
     color: #7f9e9f;
+    -webkit-app-region: drag
   }
 
   #app {

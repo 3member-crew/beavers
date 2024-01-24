@@ -10,20 +10,22 @@
         </div>
       </div>
       <div class="game-details">
-        <label >Номер шариков:</label>
+        <label >Кол-во шариков:</label>
         <input type="number" @change="checkNumber('balloons')" v-model="balloons">
         <label >Время:</label>
         <input type="number" @change="checkNumber('time')" v-model="time">
       </div>
-      <button class="start-game" @click="startGame">
+      <div class="modal-btn">
+        <game-button class="start-game" @click="startGame">
 
-        {{playGameText}}
-      </button>
-      <div v-if="!this.firstGame">
-        <router-link to="/">
-          <button class="start-game">
-            Вернуться в меню
-          </button>
+          {{playGameText}}
+        </game-button>
+      </div>
+      <div v-if="!this.firstGame" class="modal-btn">
+        <router-link to="/" style="width: 100%; display: flex; justify-content: center; text-decoration: none;">
+            <game-button class="start-game">
+              Вернуться в меню
+            </game-button>
         </router-link>
       </div>
     </div>
@@ -31,9 +33,14 @@
 </template>
 
 <script>
+import GameButton from "../components/GameButton.vue";
+
 export default {
   name: "Modal",
   props: ["accuracy","points"],
+  components: {
+    GameButton
+  },
   data(){
     return{
       time: 60,
@@ -62,10 +69,10 @@ export default {
   computed: {
     playGameText(){
       if(this.firstGame){
-        return "Play Game"
+        return "Играть"
       }
       else{
-        return "Play Again"
+        return "Играть еще раз"
       }
     }
   }
@@ -101,7 +108,7 @@ export default {
   font-weight: bold;
   padding: 10px;
   font-size: 1.5em;
-  width: 100%;
+  width: 70%;
   cursor: pointer;
   border: 0;
   margin-bottom: 20px;
@@ -170,4 +177,11 @@ input[type=number] {
 .score{
   color: #42b983;
 }
+
+.modal-btn {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
 </style>
